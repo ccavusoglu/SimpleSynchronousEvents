@@ -6,9 +6,11 @@ using System.Linq;
 
 namespace EventLibrary
 {
-    public class EventManager
+    public sealed class EventManager
     {
-        private static EventManager Instance;
+        private static EventManager InstanceSelf;
+        private static readonly object InstanceLock = new object();
+
         private readonly ConcurrentDictionary<Type, ImmutableList<Action<IEventBase>>> subscribers;
 
         private EventManager()
@@ -16,9 +18,15 @@ namespace EventLibrary
             subscribers = new ConcurrentDictionary<Type, ImmutableList<Action<IEventBase>>>();
         }
 
-        public static EventManager GetInstance()
+        public static EventManager Instance
         {
-            return Instance ?? (Instance = new EventManager());
+            get
+            {
+                lock (InstanceLock)
+                {
+                    return InstanceSelf ?? (InstanceSelf = new EventManager());
+                }
+            }
         }
 
         public void Fire<T>(T obj) where T : IEventBase

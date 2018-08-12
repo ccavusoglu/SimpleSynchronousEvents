@@ -8,19 +8,12 @@ namespace SubscriberLibrary
         private readonly EventManager eventManager;
         private readonly Action<IEventBase> anotherConcreteEventCallback;
 
-        private int id;
-
-        public SubscriberClass(int id)
+        public SubscriberClass()
         {
-            this.id = id;
-
-            eventManager = EventManager.GetInstance();
+            eventManager = EventManager.Instance;
 
             eventManager.Subscribe<SomeConcreteEvent>(o =>
-                Console.WriteLine($"SomeConcreteEvent handled in SubscriberClass {id}: {((SomeConcreteEvent)o).Param}"));
-
-            eventManager.Subscribe<SomeConcreteEvent>(o =>
-                Console.WriteLine($"SomeConcreteEvent handled in SubscriberClass1 {id}: {((SomeConcreteEvent)o).Param}"));
+                Console.WriteLine($"SomeConcreteEvent handled in SubscriberClass: {((SomeConcreteEvent)o).Param}"));
 
             anotherConcreteEventCallback =
                 eventManager.Subscribe<AnotherConcreteEvent>(o => HandleAnotherConcreteEvent((AnotherConcreteEvent)o));
@@ -30,7 +23,7 @@ namespace SubscriberLibrary
         {
             eventManager.UnSubscribe<AnotherConcreteEvent>(anotherConcreteEventCallback);
 
-            Console.WriteLine($"AnotherConcreteEvent handled in SubscriberClass {id}: {anotherConcreteEvent.Param}");
+            Console.WriteLine($"AnotherConcreteEvent handled in SubscriberClass: {anotherConcreteEvent.Param}");
         }
     }
 }

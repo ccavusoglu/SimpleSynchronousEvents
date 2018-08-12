@@ -11,28 +11,11 @@ namespace SimpleSynchronousEvents
     {
         static void Main(string[] args)
         {
-            EventManager.GetInstance();
+            var subscriber = new SubscriberClass();
+            var publisher = new PublisherClass();
 
-                    new SubscriberClass(1);
-//
-//            Task.Factory.StartNew(() =>
-//            {
-//                for (int i = 0; i < 10; i++)
-//                {
-//                    Thread.Sleep(5);
-//                    new SubscriberClass(i);
-//                }
-//            });
-
-            var publisherClass = new PublisherClass();
-
-            Task.Factory.StartNew(() =>
-            {
-                for (int i = 0; i < 10; i++)
-                {
-                    publisherClass.DoAnotherWork(i);
-                }
-            });
+            publisher.DoWork();
+            publisher.DoAnotherWork();
 
             Console.Read();
         }

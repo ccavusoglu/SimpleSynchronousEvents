@@ -6,7 +6,7 @@ namespace PublisherLibrary
     {
         private readonly EventManager eventManager;
 
-        public PublisherClass() { eventManager = EventManager.GetInstance(); }
+        public PublisherClass() { eventManager = EventManager.Instance; }
 
         public void DoWork()
         {
@@ -16,11 +16,11 @@ namespace PublisherLibrary
             });
         }
 
-        public void DoAnotherWork(int i)
+        public void DoAnotherWork()
         {
             eventManager.Fire(new AnotherConcreteEvent
             {
-                Param = $"Event fired from PublisherClass::DoAnotherWork {i}"
+                Param = $"Event fired from PublisherClass::DoAnotherWork"
             });
         }
     }

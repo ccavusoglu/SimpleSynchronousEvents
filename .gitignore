@@ -1,0 +1,14 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/EventLibrary/bin
+/EventLibrary/obj
+/.vs/SimpleSynchronousEvents/v15/Server/sqlite3
+/PublisherLibrary/obj
+/PublisherLibrary/bin
+/SimpleSynchronousEvents/obj
+/SimpleSynchronousEvents/bin
+/SubscriberLibrary/obj
+/SubscriberLibrary/bin
+/.vs/SimpleSynchronousEvents/v15/.suo
