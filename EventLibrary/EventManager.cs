@@ -8,25 +8,14 @@ namespace EventLibrary
 {
     public sealed class EventManager
     {
-        private static EventManager InstanceSelf;
-        private static readonly object InstanceLock = new object();
-
+        private static readonly Lazy<EventManager> InstanceSelf = new Lazy<EventManager>(() => new EventManager());
         private readonly ConcurrentDictionary<Type, ImmutableList<Action<IEventBase>>> subscribers;
+
+        public static EventManager Instance => InstanceSelf.Value;
 
         private EventManager()
         {
             subscribers = new ConcurrentDictionary<Type, ImmutableList<Action<IEventBase>>>();
-        }
-
-        public static EventManager Instance
-        {
-            get
-            {
-                lock (InstanceLock)
-                {
-                    return InstanceSelf ?? (InstanceSelf = new EventManager());
-                }
-            }
         }
 
         public void Fire<T>(T obj) where T : IEventBase
